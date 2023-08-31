@@ -16,6 +16,7 @@ function App() {
                 /*                
                  https://github.com/ccxt/ccxt/wiki/Manual#market-structure
                 https://docs.ccxt.com/#/README?id=market-structure
+                // check
                  */
                 const tradingPairs = markets.map(({ id, symbol, base, lowercaseId }) => {
                     return { id, symbol, base, lowercaseId };
