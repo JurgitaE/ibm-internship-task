@@ -8,7 +8,18 @@ const SymbolSearch = ({ markets }) => {
 
         const matchingSymbols = markets
             .map(market => market.symbol)
-            .filter(s => s.toLowerCase().includes(symbol.toLowerCase()));
+            .filter(s => s.toLowerCase().includes(symbol.toLowerCase()))
+            .sort((a, b) => {
+                a = a.toLowerCase();
+                b = b.toLowerCase();
+                if (a.startsWith(symbol) && !b.startsWith(symbol)) {
+                    return -1;
+                } else if (b.startsWith(symbol) && !a.startsWith(symbol)) {
+                    return 1;
+                } else {
+                    return a > b ? 1 : -1;
+                }
+            });
 
         setMatchedSymbols(matchingSymbols);
     };

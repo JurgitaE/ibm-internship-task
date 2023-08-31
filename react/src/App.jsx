@@ -20,6 +20,7 @@ function App() {
                 const tradingPairs = markets.map(({ id, symbol, base, lowercaseId }) => {
                     return { id, symbol, base, lowercaseId };
                 });
+
                 setAvailableTradingPairs(tradingPairs);
                 console.log(tradingPairs);
             } catch (error) {
