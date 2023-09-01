@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import ccxt from 'ccxt';
 import { Global } from './Global';
+import Chart from 'chart.js/auto';
 const SymbolSearch = ({ markets }) => {
     const {
         searchSymbol,
@@ -9,8 +10,8 @@ const SymbolSearch = ({ markets }) => {
         setMatchedSymbols,
         inputValid,
         setInputValid,
-        selectedPair,
-        setSelectedPair,
+        // selectedPair,
+        // setSelectedPair,
     } = useContext(Global);
 
     const handleSearch = symbol => {
@@ -44,19 +45,17 @@ const SymbolSearch = ({ markets }) => {
 
         // Fetch daily data for the past 30 days
         const ohlcv = await binance.fetchOHLCV(symbol, '1d', since);
-        console.log('Selected Pair:', selectedPair);
         return ohlcv;
     }
     const handleSelect = async symbol => {
         try {
             console.log('Symbol: ', symbol);
-            setSelectedPair(`${symbol}`);
-
             setSearchSymbol('');
             setMatchedSymbols([]);
 
             // Fetch historical data
             const historicalData = await fetchHistoricalData(symbol);
+            drawChart(historicalData, symbol);
 
             console.log('Historical Data:', historicalData);
         } catch (error) {
@@ -64,6 +63,48 @@ const SymbolSearch = ({ markets }) => {
         }
     };
 
+    const drawChart = (data, symbol) => {
+        const chartCanvas = document.getElementById('chart');
+        const ctx = chartCanvas.getContext('2d');
+
+        chartCanvas.chart && chartCanvas.chart.destroy();
+        // Extract closing prices from the historical data
+        const closingPrices = data.map(item => item[4]); // Assuming closing prices are in the 5th column
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [...Array(closingPrices.length).keys()],
+                datasets: [
+                    {
+                        label: 'Closing Prices',
+                        data: closingPrices,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: false,
+                    },
+                ],
+            },
+            options: {
+                responsive: false,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Days',
+                        },
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: symbol,
+                        },
+                    },
+                },
+            },
+        });
+    };
     return (
         <div className="relative xs:w-64 w-full  ">
             {!inputValid && (

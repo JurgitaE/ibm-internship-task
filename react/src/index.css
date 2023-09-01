@@ -8,3 +8,6 @@
     padding: 2rem;
     text-align: center;
 }
+canvas {
+    box-sizing: border-box;
+}
