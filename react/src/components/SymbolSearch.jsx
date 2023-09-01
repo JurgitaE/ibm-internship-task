@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import ccxt from 'ccxt';
 import { Global } from './Global';
 import { Line } from 'react-chartjs-2';
@@ -14,7 +14,6 @@ import {
     Filler,
 } from 'chart.js';
 ChartJS.register(Title, Tooltip, LineElement, Legend, CategoryScale, LinearScale, PointElement, Filler);
-import { format } from 'date-fns';
 
 const SymbolSearch = ({ markets }) => {
     const {
@@ -24,11 +23,9 @@ const SymbolSearch = ({ markets }) => {
         setMatchedSymbols,
         inputValid,
         setInputValid,
-        chartData,
         setChartData,
+        data,
     } = useContext(Global);
-
-    const [data, setData] = useState('');
 
     const handleSearch = symbol => {
         if (symbol.length <= 30) {
@@ -81,53 +78,6 @@ const SymbolSearch = ({ markets }) => {
         }
     };
 
-    useEffect(() => {
-        if (chartData) {
-            const formattedLabels = chartData.data.map(item => {
-                const timestamp = item[0]; // Assuming timestamps are in the 1st column
-                const date = new Date(timestamp);
-                return format(date, 'dd-MM');
-            });
-            const closingPrices = chartData.data.map(item => item[4]);
-            setData([
-                {
-                    labels: formattedLabels,
-                    datasets: [
-                        {
-                            label: 'Closing prices',
-                            data: closingPrices,
-                            backgroundColor: 'yellow',
-                            borderColor: 'green',
-                            tension: 0.4,
-                            fill: true,
-                            pointStyle: 'rect',
-                            pointBorderColor: 'blue',
-                            pointBackgroundColor: '#fff',
-                            showLine: true,
-                        },
-                    ],
-                },
-                {
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Days',
-                            },
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: chartData.symbol,
-                                color: 'blue',
-                                fontWeight: 'bold',
-                            },
-                        },
-                    },
-                },
-            ]);
-        }
-    }, [chartData]);
     return (
         <div className="relative  w-full  ">
             {!inputValid && (
