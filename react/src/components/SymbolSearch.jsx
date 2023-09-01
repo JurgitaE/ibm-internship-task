@@ -104,7 +104,6 @@ const SymbolSearch = ({ markets }) => {
                             pointBorderColor: 'blue',
                             pointBackgroundColor: '#fff',
                             showLine: true,
-                            color: 'red',
                         },
                     ],
                 },
@@ -120,6 +119,8 @@ const SymbolSearch = ({ markets }) => {
                             title: {
                                 display: true,
                                 text: chartData.symbol,
+                                color: 'blue',
+                                fontWeight: 'bold',
                             },
                         },
                     },
