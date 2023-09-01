@@ -6,7 +6,7 @@ export const GlobalProvider = ({ children }) => {
     const [searchSymbol, setSearchSymbol] = useState('');
     const [matchedSymbols, setMatchedSymbols] = useState([]);
     const [inputValid, setInputValid] = useState(true);
-    const [selectedPair, setSelectedPair] = useState('');
+    const [chartData, setChartData] = useState('');
     return (
         <Global.Provider
             value={{
@@ -16,11 +16,13 @@ export const GlobalProvider = ({ children }) => {
                 setMatchedSymbols,
                 inputValid,
                 setInputValid,
-                selectedPair,
-                setSelectedPair,
+                chartData,
+                setChartData,
             }}
         >
             {children}
         </Global.Provider>
     );
 };
+//   const historicalData = await fetchHistoricalData(symbol);
+// setChartData({ symbol, data: historicalData });
