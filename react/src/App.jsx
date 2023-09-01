@@ -12,7 +12,7 @@ function App() {
                 const exchange = new ccxt.binance();
                 //  console.log(exchange); /* exchange sturcture in docs */
                 const markets = await exchange.fetchMarkets();
-                console.log(markets);
+                // console.log(markets);
                 /*                
                  https://github.com/ccxt/ccxt/wiki/Manual#market-structure
                 https://docs.ccxt.com/#/README?id=market-structure
@@ -23,7 +23,7 @@ function App() {
                 });
 
                 setAvailableTradingPairs(tradingPairs);
-                console.log(tradingPairs);
+                // console.log(tradingPairs);
             } catch (error) {
                 console.error('Error fetching trading pairs:', error);
                 setAvailableTradingPairs([]);
@@ -33,7 +33,7 @@ function App() {
         fetchTradingPairs();
     }, []);
 
-    console.log('Available Trading Pairs:', availableTradingPairs);
+    // console.log('Available Trading Pairs:', availableTradingPairs);
     return (
         <div className="min-h-screen bg-red flex items-start justify-center">
             <SymbolSearch markets={availableTradingPairs} />

@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 const SymbolSearch = ({ markets }) => {
     const [searchSymbol, setSearchSymbol] = useState('');
     const [matchedSymbols, setMatchedSymbols] = useState([]);
     const [inputValid, setInputValid] = useState(true);
+    const [selectedPair, setSelectedPair] = useState('');
 
     const handleSearch = symbol => {
         if (symbol.length <= 30) {
@@ -29,6 +30,13 @@ const SymbolSearch = ({ markets }) => {
             setInputValid(false);
         }
     };
+    const handleSelect = symbol => {
+        console.log('Symbol: ', symbol);
+        setSelectedPair(`${symbol}`);
+        console.log('Selected Pair:', selectedPair);
+        setSearchSymbol('');
+        setMatchedSymbols([]);
+    };
 
     return (
         <div className="relative xs:w-64 w-full  ">
@@ -52,7 +60,7 @@ const SymbolSearch = ({ markets }) => {
                         <div
                             key={index}
                             className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                            onClick={() => handleSearch(symbol)}
+                            onClick={() => handleSelect(symbol)}
                         >
                             {symbol}
                         </div>
