@@ -1,9 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import ccxt from 'ccxt';
+import { Global } from './Global';
 const SymbolSearch = ({ markets }) => {
-    const [searchSymbol, setSearchSymbol] = useState('');
-    const [matchedSymbols, setMatchedSymbols] = useState([]);
-    const [inputValid, setInputValid] = useState(true);
-    const [selectedPair, setSelectedPair] = useState('');
+    const {
+        searchSymbol,
+        setSearchSymbol,
+        matchedSymbols,
+        setMatchedSymbols,
+        inputValid,
+        setInputValid,
+        selectedPair,
+        setSelectedPair,
+    } = useContext(Global);
 
     const handleSearch = symbol => {
         if (symbol.length <= 30) {
@@ -30,12 +38,30 @@ const SymbolSearch = ({ markets }) => {
             setInputValid(false);
         }
     };
-    const handleSelect = symbol => {
-        console.log('Symbol: ', symbol);
-        setSelectedPair(`${symbol}`);
+    async function fetchHistoricalData(symbol) {
+        const binance = new ccxt.binance();
+        const since = Date.now() - 30 * 24 * 60 * 60 * 1000; // 30 days ago in milliseconds
+
+        // Fetch daily data for the past 30 days
+        const ohlcv = await binance.fetchOHLCV(symbol, '1d', since);
         console.log('Selected Pair:', selectedPair);
-        setSearchSymbol('');
-        setMatchedSymbols([]);
+        return ohlcv;
+    }
+    const handleSelect = async symbol => {
+        try {
+            console.log('Symbol: ', symbol);
+            setSelectedPair(`${symbol}`);
+
+            setSearchSymbol('');
+            setMatchedSymbols([]);
+
+            // Fetch historical data
+            const historicalData = await fetchHistoricalData(symbol);
+
+            console.log('Historical Data:', historicalData);
+        } catch (error) {
+            console.error('Error fetching historical data:', error);
+        }
     };
 
     return (
@@ -71,6 +97,7 @@ const SymbolSearch = ({ markets }) => {
                     <div className="px-4 py-2 ">No matches found</div>
                 </div>
             ) : null}
+            <canvas id="chart" width="400" height="200"></canvas>
         </div>
     );
 };

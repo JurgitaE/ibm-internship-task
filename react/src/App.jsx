@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import ccxt from 'ccxt';
 
 import SymbolSearch from './components/SymbolSearch';
+import { GlobalProvider } from './components/Global';
 
 function App() {
     const [availableTradingPairs, setAvailableTradingPairs] = useState([]);
@@ -35,9 +36,11 @@ function App() {
 
     // console.log('Available Trading Pairs:', availableTradingPairs);
     return (
-        <div className="min-h-screen bg-red flex items-start justify-center">
-            <SymbolSearch markets={availableTradingPairs} />
-        </div>
+        <GlobalProvider>
+            <div className="min-h-screen bg-red flex items-start justify-center">
+                <SymbolSearch markets={availableTradingPairs} />
+            </div>
+        </GlobalProvider>
     );
 }
 
