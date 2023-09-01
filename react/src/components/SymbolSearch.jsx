@@ -81,58 +81,6 @@ const SymbolSearch = ({ markets }) => {
         }
     };
 
-    /*     const drawChart = obj => {
-        const { data, symbol } = obj;
-        const chartCanvas = document.getElementById('chart');
-        const ctx = chartCanvas.getContext('2d');
-
-        chartCanvas.chart && chartCanvas.chart.destroy();
-
-        // Extract closing prices from the historical data
-        const closingPrices = data.map(item => item[4]); // Assuming closing prices are in the 5th column
-
-        const formattedLabels = data.map(item => {
-            const timestamp = item[0]; // Assuming timestamps are in the 1st column
-            const date = new Date(timestamp);
-            return format(date, 'dd-MM');
-        });
-
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: formattedLabels,
-                datasets: [
-                    {
-                        label: 'Closing Prices',
-                        data: closingPrices,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1,
-                        fill: false,
-                    },
-                ],
-            },
-            options: {
-                responsive: false,
-                maintainAspectRatio: false,
-                scales: {
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Days',
-                        },
-                    },
-                    y: {
-                        title: {
-                            display: true,
-                            text: symbol,
-                        },
-                    },
-                },
-            },
-        });
-    };
-
-   */
     useEffect(() => {
         if (chartData) {
             const formattedLabels = chartData.data.map(item => {
@@ -141,29 +89,48 @@ const SymbolSearch = ({ markets }) => {
                 return format(date, 'dd-MM');
             });
             const closingPrices = chartData.data.map(item => item[4]);
-            setData({
-                labels: formattedLabels,
-                datasets: [
-                    {
-                        label: 'Closing prices',
-                        data: closingPrices,
-                        backgroundColor: 'yellow',
-                        borderColor: 'green',
-                        tension: 0.4,
-                        fill: true,
-                        pointStyle: 'rect',
-                        pointBorderColor: 'blue',
-                        pointBackgroundColor: '#fff',
-                        showLine: true,
+            setData([
+                {
+                    labels: formattedLabels,
+                    datasets: [
+                        {
+                            label: 'Closing prices',
+                            data: closingPrices,
+                            backgroundColor: 'yellow',
+                            borderColor: 'green',
+                            tension: 0.4,
+                            fill: true,
+                            pointStyle: 'rect',
+                            pointBorderColor: 'blue',
+                            pointBackgroundColor: '#fff',
+                            showLine: true,
+                            color: 'red',
+                        },
+                    ],
+                },
+                {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Days',
+                            },
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: chartData.symbol,
+                            },
+                        },
                     },
-                ],
-            });
+                },
+            ]);
         }
     }, [chartData]);
     return (
         <div className="relative  w-full  ">
             {!inputValid && (
-                <div className="absolute top-[-20px] text-[10px] text-red-600 mt-1">
+                <div className="absolute top-[-20px] text-[10px] text-red-600 mt-1 transform translate-x-1/2 right-1/2">
                     *Input should not exceed 30 characters!
                 </div>
             )}
@@ -177,7 +144,7 @@ const SymbolSearch = ({ markets }) => {
                 onChange={e => handleSearch(e.target.value)}
             />
             {matchedSymbols.length > 0 ? (
-                <div className="absolute mt-2   w-full max-h-[80vh] overflow-y-auto bg-white border rounded-lg shadow-md">
+                <div className="absolute mt-2  xs:w-64 w-full max-h-[80vh] overflow-y-auto bg-white border rounded-lg shadow-md transform translate-x-1/2 right-1/2">
                     {matchedSymbols.map((symbol, index) => (
                         <div
                             key={index}
@@ -189,12 +156,12 @@ const SymbolSearch = ({ markets }) => {
                     ))}
                 </div>
             ) : searchSymbol !== '' ? (
-                <div className="absolute mt-2  xs:w-64 w-full bg-white border rounded-lg shadow-md">
+                <div className="absolute mt-2 xs:w-64 w-full bg-white border rounded-lg shadow-md transform translate-x-1/2 right-1/2">
                     <div className="px-4 py-2 ">No matches found</div>
                 </div>
             ) : null}
-            {data && (
-                <Line data={data} width="800" height="400">
+            {data[0] && (
+                <Line data={data[0]} options={data[1]}>
                     Hello
                 </Line>
             )}
