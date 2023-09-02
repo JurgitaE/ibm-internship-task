@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import ccxt from 'ccxt';
 import { Global } from './Global';
-import { LineChart } from './LineChart';
 
 const SymbolSearch = () => {
     const {
