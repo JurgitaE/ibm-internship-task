@@ -12,6 +12,8 @@ const SymbolSearch = () => {
         inputValid,
         setInputValid,
         setChartData,
+        startDate,
+        endDate,
     } = useContext(Global);
 
     const handleSearch = symbol => {
@@ -40,12 +42,11 @@ const SymbolSearch = () => {
         }
     };
 
-    async function fetchHistoricalData(symbol) {
+    async function fetchHistoricalData(symbol, since, limit) {
         const binance = new ccxt.binance();
-        const since = Date.now() - 30 * 24 * 60 * 60 * 1000; // 30 days ago in milliseconds
 
         // Fetch daily data for the past 30 days
-        const ohlcv = await binance.fetchOHLCV(symbol, '1d', since);
+        const ohlcv = await binance.fetchOHLCV(symbol, '1d', since, limit);
         return ohlcv;
     }
 
@@ -56,7 +57,11 @@ const SymbolSearch = () => {
             setMatchedSymbols([]);
 
             // Fetch historical data
-            const historicalData = await fetchHistoricalData(symbol);
+            const historicalData = await fetchHistoricalData(
+                symbol,
+                startDate,
+                Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24))
+            );
             setChartData({ symbol, data: historicalData });
 
             console.log('Historical Data:', historicalData);

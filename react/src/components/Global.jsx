@@ -10,7 +10,7 @@ export const GlobalProvider = ({ children }) => {
     const [inputValid, setInputValid] = useState(true);
     const [chartData, setChartData] = useState('');
     const [chartSetup, setChartSetup] = useState('');
-    const [startDate, setStartDate] = useState('');
+    const [startDate, setStartDate] = useState(Date.now() - 30 * 24 * 60 * 60 * 1000);
     const [endDate, setEndDate] = useState(Date.now());
     useEffect(() => {
         async function fetchTradingPairs() {
@@ -73,14 +73,14 @@ export const GlobalProvider = ({ children }) => {
                                 display: false,
                             },
                             title: {
-                                display: true,
-                                text: 'Daily chart',
+                                // display: true,
+                                // text: 'Daily chart',
                             },
                         },
                         y: {
                             title: {
-                                display: true,
-                                text: chartData.symbol,
+                                // display: true,
+                                // text: chartData.symbol,
                                 color: 'blue',
                                 fontWeight: 'bold',
                             },
