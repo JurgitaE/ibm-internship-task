@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useContext } from 'react';
 import ccxt from 'ccxt';
 import { Global } from './Global';
@@ -52,6 +53,9 @@ const SymbolSearch = () => {
 
     const handleSelect = async symbol => {
         try {
+            axios.post('http://localhost:3000/select', { symbol }).then(res => {
+                console.log(res.data.message);
+            });
             console.log('Symbol: ', symbol);
             setSearchSymbol('');
             setMatchedSymbols([]);
