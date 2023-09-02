@@ -5,6 +5,13 @@ export const Global = createContext();
 
 export const GlobalProvider = ({ children }) => {
     const [availableTradingPairs, setAvailableTradingPairs] = useState([]);
+    const [searchSymbol, setSearchSymbol] = useState('');
+    const [matchedSymbols, setMatchedSymbols] = useState([]);
+    const [inputValid, setInputValid] = useState(true);
+    const [chartData, setChartData] = useState('');
+    const [chartSetup, setChartSetup] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState(Date.now());
     useEffect(() => {
         async function fetchTradingPairs() {
             try {
@@ -32,12 +39,6 @@ export const GlobalProvider = ({ children }) => {
         fetchTradingPairs();
     }, []);
 
-    const [searchSymbol, setSearchSymbol] = useState('');
-    const [matchedSymbols, setMatchedSymbols] = useState([]);
-    const [inputValid, setInputValid] = useState(true);
-    const [chartData, setChartData] = useState('');
-
-    const [data, setData] = useState('');
     useEffect(() => {
         if (chartData) {
             const formattedLabels = chartData.data.map(item => {
@@ -46,7 +47,7 @@ export const GlobalProvider = ({ children }) => {
                 return format(date, 'Y-MM-dd');
             });
             const closingPrices = chartData.data.map(item => item[4]);
-            setData([
+            setChartSetup([
                 {
                     labels: formattedLabels,
                     datasets: [
@@ -102,8 +103,12 @@ export const GlobalProvider = ({ children }) => {
                 setInputValid,
                 chartData,
                 setChartData,
-                data,
-                setData,
+                chartSetup,
+                setChartSetup,
+                startDate,
+                setStartDate,
+                endDate,
+                setEndDate,
             }}
         >
             {children}

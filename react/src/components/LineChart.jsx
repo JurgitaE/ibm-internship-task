@@ -15,6 +15,6 @@ import { useContext } from 'react';
 ChartJS.register(Title, Tooltip, LineElement, Legend, CategoryScale, LinearScale, PointElement, Filler);
 
 export const LineChart = () => {
-    const { data } = useContext(Global);
-    return data[0] && <Line data={data[0]} options={data[1]}></Line>;
+    const { chartSetup } = useContext(Global);
+    return chartSetup[0] && <Line data={chartSetup[0]} options={chartSetup[1]}></Line>;
 };
