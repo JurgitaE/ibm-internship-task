@@ -15,8 +15,9 @@ import {
 } from 'chart.js';
 ChartJS.register(Title, Tooltip, LineElement, Legend, CategoryScale, LinearScale, PointElement, Filler);
 
-const SymbolSearch = ({ markets }) => {
+const SymbolSearch = () => {
     const {
+        availableTradingPairs,
         searchSymbol,
         setSearchSymbol,
         matchedSymbols,
@@ -31,7 +32,7 @@ const SymbolSearch = ({ markets }) => {
         if (symbol.length <= 30) {
             setSearchSymbol(symbol);
 
-            const matchingSymbols = markets
+            const matchingSymbols = availableTradingPairs
                 .map(market => market.symbol)
                 .filter(s => s.toLowerCase().includes(symbol.toLowerCase()))
                 .sort((a, b) => {
