@@ -1,19 +1,7 @@
 import { useContext } from 'react';
 import ccxt from 'ccxt';
 import { Global } from './Global';
-import { Line } from 'react-chartjs-2';
-import {
-    Chart as ChartJS,
-    Title,
-    Tooltip,
-    LineElement,
-    Legend,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    Filler,
-} from 'chart.js';
-ChartJS.register(Title, Tooltip, LineElement, Legend, CategoryScale, LinearScale, PointElement, Filler);
+import { LineChart } from './LineChart';
 
 const SymbolSearch = () => {
     const {
@@ -25,7 +13,6 @@ const SymbolSearch = () => {
         inputValid,
         setInputValid,
         setChartData,
-        data,
     } = useContext(Global);
 
     const handleSearch = symbol => {
@@ -112,11 +99,6 @@ const SymbolSearch = () => {
                     <div className="px-4 py-2 ">No matches found</div>
                 </div>
             ) : null}
-            {data[0] && (
-                <Line data={data[0]} options={data[1]}>
-                    Hello
-                </Line>
-            )}
         </div>
     );
 };

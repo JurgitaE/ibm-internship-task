@@ -43,7 +43,7 @@ export const GlobalProvider = ({ children }) => {
             const formattedLabels = chartData.data.map(item => {
                 const timestamp = item[0];
                 const date = new Date(timestamp);
-                return format(date, 'MM-dd');
+                return format(date, 'Y-MM-dd');
             });
             const closingPrices = chartData.data.map(item => item[4]);
             setData([
@@ -53,13 +53,14 @@ export const GlobalProvider = ({ children }) => {
                         {
                             label: 'Closing prices',
                             data: closingPrices,
-                            backgroundColor: 'rgba(255, 255, 0, 0.5)',
-                            borderColor: 'green',
-                            tension: 0.4,
+                            backgroundColor: 'rgba(135, 206, 236, 0.5)',
+                            borderColor: 'blue',
+                            borderWidth: 1,
+                            tension: 0.1,
                             fill: true,
                             pointStyle: 'rect',
-                            pointBorderColor: 'blue',
-                            pointBackgroundColor: '#fff',
+                            pointBorderColor: 'transparent',
+                            pointBackgroundColor: 'transparent',
                             showLine: true,
                         },
                     ],
