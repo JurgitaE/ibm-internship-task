@@ -10,7 +10,7 @@ export const GlobalProvider = ({ children }) => {
     const [inputValid, setInputValid] = useState(true);
     const [chartData, setChartData] = useState('');
     const [chartSetup, setChartSetup] = useState('');
-    const [startDate, setStartDate] = useState(Date.now() - 30 * 24 * 60 * 60 * 1000);
+    const [startDate, setStartDate] = useState(Date.now() - 29 * 24 * 60 * 60 * 1000);
     const [endDate, setEndDate] = useState(Date.now());
     useEffect(() => {
         async function fetchTradingPairs() {

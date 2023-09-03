@@ -17,7 +17,7 @@ export const DatePicker = () => {
             const historicalData = await fetchHistoricalData(
                 chartData.symbol,
                 startDate,
-                Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24) + 1)
+                Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24) + 1)
             );
             setChartData(chartData => ({ ...chartData, data: historicalData }));
 

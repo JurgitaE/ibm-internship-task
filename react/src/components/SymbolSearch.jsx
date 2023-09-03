@@ -64,7 +64,7 @@ const SymbolSearch = () => {
             const historicalData = await fetchHistoricalData(
                 symbol,
                 startDate,
-                Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24))
+                Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1
             );
             setChartData({ symbol, data: historicalData });
 
