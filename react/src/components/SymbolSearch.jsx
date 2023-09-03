@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useContext } from 'react';
 import ccxt from 'ccxt';
 import { Global } from './Global';
-import { format } from 'date-fns';
+import { startDateValidation, endDateValidation } from '../helper-functions/dateValidation';
 const SymbolSearch = () => {
     const {
         availableTradingPairs,
@@ -45,13 +45,15 @@ const SymbolSearch = () => {
 
     async function fetchHistoricalData(symbol, since, limit) {
         const binance = new ccxt.binance();
-        console.log(new Date(startDate), format(startDate || Date.now(), 'Y-MM-dd'));
+        console.log(startDate, endDate);
         // Fetch daily data for the past 30 days
         const ohlcv = await binance.fetchOHLCV(symbol, '1d', since, limit);
         return ohlcv;
     }
 
-    const handleSelect = async symbol => {
+    const handleSelect = async (symbol, start, end) => {
+        end = endDateValidation(end);
+        start = startDateValidation(start, end);
         try {
             axios.post('http://localhost:3000/select', { symbol }).then(res => {
                 console.log(res.data.message);
@@ -63,8 +65,8 @@ const SymbolSearch = () => {
             // Fetch historical data
             const historicalData = await fetchHistoricalData(
                 symbol,
-                startDate,
-                Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1
+                start,
+                Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1
             );
             setChartData({ symbol, data: historicalData });
 
@@ -96,7 +98,7 @@ const SymbolSearch = () => {
                         <div
                             key={index}
                             className="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                            onClick={() => handleSelect(symbol)}
+                            onClick={() => handleSelect(symbol, startDate, endDate)}
                         >
                             {symbol}
                         </div>
