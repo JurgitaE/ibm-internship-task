@@ -6,7 +6,7 @@ import { DatePicker } from './components/DatePicker';
 function App() {
     return (
         <GlobalProvider>
-            <div className="min-h-screen flex flex-col items-center justify-start">
+            <div className="flex flex-col items-center justify-start min-h-[700px]">
                 <SymbolSearch />
                 <DatePicker />
                 <LineChart />

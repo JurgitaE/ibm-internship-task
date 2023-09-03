@@ -10,8 +10,10 @@ export const GlobalProvider = ({ children }) => {
     const [inputValid, setInputValid] = useState(true);
     const [chartData, setChartData] = useState('');
     const [chartSetup, setChartSetup] = useState('');
-    const [startDate, setStartDate] = useState(Date.now() - 29 * 24 * 60 * 60 * 1000);
+    const [startDate, setStartDate] = useState(new Date(Date.now() - 29 * 24 * 60 * 60 * 1000).setHours(3, 0, 0, 0));
+    //set 3 hours according to picker, otherwise one day lag with binance data
     const [endDate, setEndDate] = useState(Date.now());
+
     useEffect(() => {
         async function fetchTradingPairs() {
             try {

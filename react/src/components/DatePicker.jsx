@@ -7,7 +7,7 @@ export const DatePicker = () => {
     const { startDate, setStartDate, endDate, setEndDate, chartData, setChartData } = useContext(Global);
 
     async function fetchHistoricalData(symbol, since, limit) {
-        console.log(symbol, since, limit);
+        console.log(symbol, new Date(since), limit);
         const binance = new ccxt.binance();
         const ohlcv = await binance.fetchOHLCV(symbol, '1d', since, limit);
         return ohlcv;

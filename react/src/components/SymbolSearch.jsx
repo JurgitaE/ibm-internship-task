@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useContext } from 'react';
 import ccxt from 'ccxt';
 import { Global } from './Global';
-
+import { format } from 'date-fns';
 const SymbolSearch = () => {
     const {
         availableTradingPairs,
@@ -45,7 +45,7 @@ const SymbolSearch = () => {
 
     async function fetchHistoricalData(symbol, since, limit) {
         const binance = new ccxt.binance();
-
+        console.log(new Date(startDate), format(startDate || Date.now(), 'Y-MM-dd'));
         // Fetch daily data for the past 30 days
         const ohlcv = await binance.fetchOHLCV(symbol, '1d', since, limit);
         return ohlcv;
