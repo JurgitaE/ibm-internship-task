@@ -1,3 +1,4 @@
+import './App.scss';
 import SymbolSearch from './components/SymbolSearch';
 import { GlobalProvider } from './components/Global';
 import { LineChart } from './components/LineChart';
