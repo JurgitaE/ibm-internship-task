@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import ccxt from 'ccxt';
 import { Global } from './Global';
 import { startDateValidation, endDateValidation } from '../helper-functions/dateValidation';
+
 const SymbolSearch = () => {
     const {
         availableTradingPairs,
@@ -15,12 +16,30 @@ const SymbolSearch = () => {
         setChartData,
         startDate,
         endDate,
+        timer,
+        setTimer,
     } = useContext(Global);
 
+    const lastKeyPressTime = useRef(null);
+
     const handleSearch = symbol => {
+        if (symbol) {
+            lastKeyPressTime.current = Date.now();
+            if (timer) {
+                clearTimeout(timer);
+            }
+            const newTimer = setTimeout(() => {
+                if (Date.now() - lastKeyPressTime.current >= 500) {
+                    axios.post('http://localhost:3000/search', { symbol }).then(res => {
+                        console.log(res.data.message);
+                    });
+                }
+            }, 500); //0.5s
+            setTimer(newTimer);
+        }
+
         if (symbol.length <= 30) {
             setSearchSymbol(symbol);
-
             const matchingSymbols = availableTradingPairs
                 .map(market => market.symbol)
                 .filter(s => s.toLowerCase().includes(symbol.toLowerCase()))
@@ -45,8 +64,6 @@ const SymbolSearch = () => {
 
     async function fetchHistoricalData(symbol, since, limit) {
         const binance = new ccxt.binance();
-        console.log(startDate, endDate);
-        // Fetch daily data for the past 30 days
         const ohlcv = await binance.fetchOHLCV(symbol, '1d', since, limit);
         return ohlcv;
     }
@@ -58,19 +75,14 @@ const SymbolSearch = () => {
             axios.post('http://localhost:3000/select', { symbol }).then(res => {
                 console.log(res.data.message);
             });
-            console.log('Symbol: ', symbol);
             setSearchSymbol('');
             setMatchedSymbols([]);
-
-            // Fetch historical data
             const historicalData = await fetchHistoricalData(
                 symbol,
                 start,
                 Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1
             );
             setChartData({ symbol, data: historicalData });
-
-            console.log('Historical Data:', historicalData);
         } catch (error) {
             console.error('Error fetching historical data:', error);
         }
@@ -85,7 +97,7 @@ const SymbolSearch = () => {
             )}
             <input
                 type="text"
-                className={`xs:w-64 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
+                className={`xs:w-[320px] w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
                     inputValid ? ' focus:border-blue-300' : 'focus:ring-transparent focus:border-red-500'
                 }`}
                 placeholder="Enter a symbol..."
