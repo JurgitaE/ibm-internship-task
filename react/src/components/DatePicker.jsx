@@ -1,17 +1,11 @@
 import { format } from 'date-fns';
 import { Global } from './Global';
 import { useContext } from 'react';
-import ccxt from 'ccxt';
+import { fetchHistoricalData } from '../helper-functions/fetchHistoricalData';
 import { startDateValidation, endDateValidation } from '../helper-functions/dateValidation';
 
 export const DatePicker = () => {
     const { startDate, setStartDate, endDate, setEndDate, chartData, setChartData } = useContext(Global);
-
-    async function fetchHistoricalData(symbol, since, limit) {
-        const binance = new ccxt.binance();
-        const ohlcv = await binance.fetchOHLCV(symbol, '1d', since, limit);
-        return ohlcv;
-    }
 
     const drawChartHandler = async (start, end) => {
         end = endDateValidation(end);
@@ -44,7 +38,7 @@ export const DatePicker = () => {
                             name="start-date"
                             id="start-date"
                             max={`${format(Date.now(), 'Y-MM-dd')}`}
-                            className="w-full rounded border p-2"
+                            className="w-full rounded border p-2 focus:outline-none focus:ring  focus:border-blue-300"
                             value={`${startDate ? format(startDate, 'Y-MM-dd') : ''}`}
                             onChange={e =>
                                 setStartDate(e.target.value !== '' ? new Date(e.target.value).getTime() : '')
@@ -62,7 +56,7 @@ export const DatePicker = () => {
                             id="end-date"
                             max={`${format(Date.now(), 'Y-MM-dd')}`}
                             value={`${endDate ? format(endDate, 'Y-MM-dd') : ''}`}
-                            className="w-full rounded border p-2"
+                            className="w-full rounded border p-2 focus:outline-none focus:ring  focus:border-blue-300"
                             onChange={e => setEndDate(e.target.value !== '' ? new Date(e.target.value).getTime() : '')}
                         />
                     </div>

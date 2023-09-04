@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useContext, useRef } from 'react';
-import ccxt from 'ccxt';
 import { Global } from './Global';
 import { startDateValidation, endDateValidation } from '../helper-functions/dateValidation';
+import { fetchHistoricalData } from '../helper-functions/fetchHistoricalData';
 
 const SymbolSearch = () => {
     const {
@@ -62,12 +62,6 @@ const SymbolSearch = () => {
         }
     };
 
-    async function fetchHistoricalData(symbol, since, limit) {
-        const binance = new ccxt.binance();
-        const ohlcv = await binance.fetchOHLCV(symbol, '1d', since, limit);
-        return ohlcv;
-    }
-
     const handleSelect = async (symbol, start, end) => {
         end = endDateValidation(end);
         start = startDateValidation(start, end);
@@ -100,7 +94,7 @@ const SymbolSearch = () => {
                 className={`xs:w-[320px] w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring ${
                     inputValid ? ' focus:border-blue-300' : 'focus:ring-transparent focus:border-red-500'
                 }`}
-                placeholder="Enter a symbol..."
+                placeholder="Enter cryptocurrency symbol..."
                 value={searchSymbol}
                 onChange={e => handleSearch(e.target.value)}
             />

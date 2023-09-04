@@ -4,7 +4,7 @@
 
 ## 🌟 About
 
-The CryptoChart App is a web application for educational purposes. It allows users to visualize cryptocurrency prices over time. Pull requests are welcome, but priority is given to project authors. Thank you for your cooperation!
+The CryptoChart App is a web application that provides cryptocurrency price visualization, utilizing daily close data from the Binance exchange. This project adheres to the mandatory task requirements for the JavaScript Application Developer internship at IBM.
 
 ## 🎯 Project Features/Goals
 
@@ -15,15 +15,15 @@ The CryptoChart App is a web application for educational purposes. It allows use
 -   Price chart display
 -   User actions logging
 
-## Technical IBM Requirements (Mandatory)
+## ✔️ Technical IBM Requirements (Mandatory)
 
--   Frontend: The frontend is built using React.
--   Backend: The backend is built using Node.js.
--   Styling: Custom styling is implemented using Sass and Tailwind CSS.
--   Source Code Management: The project's source code is - hosted on GitHub.
--   Documentation: Documentation is provided in this README.
+1.  Frontend: The frontend is built using React.
+1.  Backend: The backend is built using Node.js.
+1.  Styling: Custom styling is implemented using Sass and Tailwind CSS.
+1.  Source Code Management: The project's source code is - hosted on GitHub.
+1.  Documentation: Documentation is provided in this README.
 
-## Key Technologies and Choices
+## 🏭 Key Technologies and Choices
 
 -   Cryptocurrency Exchange: Binance exchange was selected as the primary data source for cryptocurrency information.
 -   Styling: The project utilizes a combination of Sass and Tailwind CSS for styling.
@@ -73,13 +73,13 @@ To run the project locally, follow these steps:
     npm start
     ```
 
-6. Open a web browser and navigate to `http://localhost:5173` to access react application.
+6. Open a web browser and navigate to [http://localhost:5173](http://localhost:5173) to access react application.
 
 ### 🧪 Running Tests
 
 There are no tests for this project.
 
-## 🎅 Authors
+## 👩‍💻 Authors
 
 Jurgita: [Github](https://github.com/JurgitaE)
 

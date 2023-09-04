@@ -20,7 +20,7 @@ export const LineChart = () => {
         chartSetup[0] && (
             <>
                 <h1 className="font-bold text-blue-500 bg-yellow-200 p-3">{chartData.symbol}</h1>
-                <Line data={chartSetup[0]} options={chartSetup[1]} activeDot={{ r: 18 }}></Line>
+                <Line data={chartSetup[0]} options={chartSetup[1]}></Line>
             </>
         )
     );
