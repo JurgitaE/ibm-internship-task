@@ -17,18 +17,27 @@ The CryptoChart App is a web application that provides cryptocurrency price visu
 
 ## ✔️ Technical IBM Requirements (Mandatory)
 
-1.  Frontend: The frontend is built using React.
-1.  Backend: The backend is built using Node.js.
-1.  Styling: Custom styling is implemented using Sass and Tailwind CSS.
-1.  Source Code Management: The project's source code is - hosted on GitHub.
-1.  Documentation: Documentation is provided in this README.
+1.  **Frontend**: The frontend is built using React.
+1.  **Backend**: The backend is built using Node.js.
+1.  **Styling**: Custom styling is implemented using Sass and Tailwind CSS.
+1.  **Source Code Management**: The project's source code is - hosted on GitHub.
+1.  **Documentation**: Documentation is provided in this README.
 
 ## 🏭 Key Technologies and Choices
 
--   Cryptocurrency Exchange: Binance exchange was selected as the primary data source for cryptocurrency information.
--   Styling: The project utilizes a combination of Sass and Tailwind CSS for styling.
--   API Interaction: Axios is used for making HTTP requests from the frontend to the backend.
--   Express: The backend is powered by Express, a popular Node.js web application framework.
+-   **Cryptocurrency Exchange**: Binance exchange was selected as the primary data source for cryptocurrency information.
+-   **Styling**: The project utilizes a combination of Sass and Tailwind CSS for styling.
+-   **API Interaction**: Axios is used for making HTTP requests from the frontend to the backend.
+-   **Express**: The backend is powered by Express, a popular Node.js web application framework.
+-   **Charting Library (react-chartjs-2)**: The project uses react-chartjs-2 to create historical data charts.
+
+## 📝 Side Notes
+
+-   **Logging search in the server**: A timeout of 0.2 seconds was set for logging cryptocurrency search. This ensures that user searches are logged with a slight delay to prevent excessive logging.
+
+-   **Default End Date**: If no end date is selected, the current date is automatically used as the end date in date picker.
+
+-   **Default Start Date**: If no start date is selected, it is automatically set to 30 days prior to the end date.
 
 ## 🧰 Getting Started
 
