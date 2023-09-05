@@ -7,7 +7,8 @@ import { DatePicker } from './components/DatePicker';
 function App() {
     return (
         <GlobalProvider>
-            <div className="flex flex-col items-center justify-start min-h-[700px]">
+            <h1 className="mb-5 font-bold xs:text-[24px]">CryptoChart app</h1>
+            <div className="flex flex-col items-center justify-start  max-w-[900px] w-full xs:w-4/5">
                 <SymbolSearch />
                 <DatePicker />
                 <LineChart />

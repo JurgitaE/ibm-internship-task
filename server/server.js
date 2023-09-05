@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-fs = require('fs');
 const app = express();
 const port = 3000;
 
@@ -14,15 +13,13 @@ app.use(
 
 app.use(express.json());
 
-const logsFolderPath = './logs';
-
 app.post('/search', (req, res) => {
-    console.log(`Search  ${req.body.symbol}`);
+    console.log(`Searched:  ${req.body.symbol}`);
 
     res.json({ message: `Server logged search ${req.body.symbol}` });
 });
 app.post('/select', (req, res) => {
-    console.log(`Selected  ${req.body.symbol}`);
+    console.log(`Selected:  ${req.body.symbol}`);
 
     res.json({ message: `Server logged select ${req.body.symbol}` });
 });

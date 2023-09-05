@@ -2,11 +2,14 @@
     box-sizing: border-box;
 }
 
-$color-primary: gold;
 #root {
     margin: 0 auto;
     padding: 2rem;
     text-align: center;
-    min-height: 100vh;
-    // background: linear-gradient(109.6deg, rgb(36, 45, 57) 11.2%, rgb(16, 37, 60) 51.2%, rgb(0, 0, 0) 98.6%);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    background-image: linear-gradient(-225deg, #fffeff 0%, #d7fffe 100%);
 }

@@ -70,6 +70,8 @@ export const GlobalProvider = ({ children }) => {
                     ],
                 },
                 {
+                    maintainAspectRatio: false,
+                    responsive: true,
                     scales: {
                         x: {
                             grid: {

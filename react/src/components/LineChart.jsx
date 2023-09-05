@@ -18,10 +18,10 @@ export const LineChart = () => {
     const { chartSetup, chartData } = useContext(Global);
     return (
         chartSetup[0] && (
-            <>
-                <h1 className="font-bold text-blue-500 bg-yellow-200 p-3">{chartData.symbol}</h1>
+            <div className="max-h-[50vh] xs:max-h-[70vh] flex flex-col items-center w-full">
+                <h2 className="font-bold text-blue-500 bg-yellow-200 p-3 ">{chartData.symbol}</h2>
                 <Line data={chartSetup[0]} options={chartSetup[1]}></Line>
-            </>
+            </div>
         )
     );
 };
