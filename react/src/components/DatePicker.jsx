@@ -5,19 +5,19 @@ import { fetchHistoricalData } from '../helper-functions/fetchHistoricalData';
 import { startDateValidation, endDateValidation } from '../helper-functions/dateValidation';
 
 export const DatePicker = () => {
-    const { startDate, setStartDate, endDate, setEndDate, chartData, setChartData } = useContext(Global);
+    const { startDate, setStartDate, endDate, setEndDate, historicalData, setHistoricalData } = useContext(Global);
 
     const drawChartHandler = async (start, end) => {
         end = endDateValidation(end);
         start = startDateValidation(start, end);
         if (end > start) {
             try {
-                const historicalData = await fetchHistoricalData(
-                    chartData.symbol,
+                const requestedData = await fetchHistoricalData(
+                    historicalData.symbol,
                     start,
                     Math.floor((end - start) / (1000 * 60 * 60 * 24) + 1)
                 );
-                setChartData(chartData => ({ ...chartData, data: historicalData }));
+                setHistoricalData(historicalData => ({ ...historicalData, data: requestedData }));
                 setStartDate(start);
                 setEndDate(end);
             } catch (error) {
@@ -26,7 +26,7 @@ export const DatePicker = () => {
         }
     };
     return (
-        chartData && (
+        historicalData && (
             <div className="w-full flex flex-col items-center justify-center xs:flex-row">
                 <div className="flex flex-col items-center justify-center xs:flex-row m-3">
                     <div className="flex items-center justify-center m-1">

@@ -8,31 +8,23 @@ export const GlobalProvider = ({ children }) => {
     const [searchSymbol, setSearchSymbol] = useState('');
     const [matchedSymbols, setMatchedSymbols] = useState([]);
     const [inputValid, setInputValid] = useState(true);
-    const [chartData, setChartData] = useState('');
+    const [historicalData, setHistoricalData] = useState('');
     const [chartSetup, setChartSetup] = useState('');
-    const [startDate, setStartDate] = useState(new Date(Date.now() - 29 * 24 * 60 * 60 * 1000).setHours(3, 0, 0, 0));
     const [timer, setTimer] = useState(null);
-    //set 3 hours according to picker, otherwise one day lag with binance data
+    //set 3 hours according to picker default
+    const [startDate, setStartDate] = useState(new Date(Date.now() - 29 * 24 * 60 * 60 * 1000).setHours(3, 0, 0, 0));
     const [endDate, setEndDate] = useState(Date.now());
 
     useEffect(() => {
         async function fetchTradingPairs() {
             try {
-                const exchange = new ccxt.binance();
-                //  console.log(exchange); /* exchange sturcture in docs */
-                const markets = await exchange.fetchMarkets();
-                // console.log(markets);
-                /*                
-                 https://github.com/ccxt/ccxt/wiki/Manual#market-structure
-                https://docs.ccxt.com/#/README?id=market-structure
-                // check
-                 */
-                const tradingPairs = markets.map(({ id, symbol, base, lowercaseId }) => {
+                const exchange = new ccxt.binance(); //exchange structure in docs
+                const market = await exchange.fetchMarkets(); //market structure in docs
+                const tradingPairs = market.map(({ id, symbol, base, lowercaseId }) => {
                     return { id, symbol, base, lowercaseId };
                 });
 
                 setAvailableTradingPairs(tradingPairs);
-                // console.log(tradingPairs);
             } catch (error) {
                 console.error('Error fetching trading pairs:', error);
                 setAvailableTradingPairs([]);
@@ -43,19 +35,19 @@ export const GlobalProvider = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        if (chartData) {
-            const formattedLabels = chartData.data.map(item => {
+        if (historicalData) {
+            const formattedLabels = historicalData.data.map(item => {
                 const timestamp = item[0];
                 const date = new Date(timestamp);
                 return format(date, 'Y-MM-dd');
             });
-            const closingPrices = chartData.data.map(item => item[4]);
+            const closingPrices = historicalData.data.map(item => item[4]);
             setChartSetup([
                 {
                     labels: formattedLabels,
                     datasets: [
                         {
-                            label: 'Closing prices',
+                            label: 'Daily closing prices',
                             data: closingPrices,
                             backgroundColor: 'rgba(135, 206, 236, 0.5)',
                             borderColor: 'blue',
@@ -72,29 +64,11 @@ export const GlobalProvider = ({ children }) => {
                 {
                     maintainAspectRatio: false,
                     responsive: true,
-                    scales: {
-                        x: {
-                            grid: {
-                                display: false,
-                            },
-                            title: {
-                                // display: true,
-                                // text: 'Daily chart',
-                            },
-                        },
-                        y: {
-                            title: {
-                                // display: true,
-                                // text: chartData.symbol,
-                                color: 'blue',
-                                fontWeight: 'bold',
-                            },
-                        },
-                    },
                 },
             ]);
         }
-    }, [chartData]);
+    }, [historicalData]);
+
     return (
         <Global.Provider
             value={{
@@ -106,8 +80,8 @@ export const GlobalProvider = ({ children }) => {
                 setMatchedSymbols,
                 inputValid,
                 setInputValid,
-                chartData,
-                setChartData,
+                historicalData,
+                setHistoricalData,
                 chartSetup,
                 setChartSetup,
                 startDate,

@@ -13,7 +13,7 @@ const SymbolSearch = () => {
         setMatchedSymbols,
         inputValid,
         setInputValid,
-        setChartData,
+        setHistoricalData,
         startDate,
         endDate,
         timer,
@@ -29,12 +29,12 @@ const SymbolSearch = () => {
                 clearTimeout(timer);
             }
             const newTimer = setTimeout(() => {
-                if (Date.now() - lastKeyPressTime.current >= 500) {
+                if (Date.now() - lastKeyPressTime.current >= 200) {
                     axios.post('http://localhost:3000/search', { symbol }).then(res => {
                         console.log(res.data.message);
                     });
                 }
-            }, 500); //0.5s
+            }, 200); //0.2s
             setTimer(newTimer);
         }
 
@@ -71,12 +71,12 @@ const SymbolSearch = () => {
             });
             setSearchSymbol('');
             setMatchedSymbols([]);
-            const historicalData = await fetchHistoricalData(
+            const requestData = await fetchHistoricalData(
                 symbol,
                 start,
                 Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1
             );
-            setChartData({ symbol, data: historicalData });
+            setHistoricalData({ symbol, data: requestData });
         } catch (error) {
             console.error('Error fetching historical data:', error);
         }

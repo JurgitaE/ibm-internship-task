@@ -15,11 +15,11 @@ import { useContext } from 'react';
 ChartJS.register(Title, Tooltip, LineElement, Legend, CategoryScale, LinearScale, PointElement, Filler);
 
 export const LineChart = () => {
-    const { chartSetup, chartData } = useContext(Global);
+    const { chartSetup, historicalData } = useContext(Global);
     return (
         chartSetup[0] && (
-            <div className="max-h-[50vh] xs:max-h-[70vh] flex flex-col items-center w-full">
-                <h2 className="font-bold text-blue-500 bg-yellow-200 p-3 ">{chartData.symbol}</h2>
+            <div className="max-h-[45vh] xs:max-h-[65vh] min-h-[300px] flex flex-col items-center w-full">
+                <h2 className="font-bold text-red-600 font-underline p-1 ">{historicalData.symbol}</h2>
                 <Line data={chartSetup[0]} options={chartSetup[1]}></Line>
             </div>
         )
